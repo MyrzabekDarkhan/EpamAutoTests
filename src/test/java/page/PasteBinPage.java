@@ -37,6 +37,9 @@ public class PasteBinPage {
     @FindBy(xpath = "//button[normalize-space()='Create New Paste']")
     private WebElement buttonSubmit;
 
+    @FindBy (xpath = "//textarea")
+    private WebElement textareaThatGetted;
+
     public PasteBinPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -81,6 +84,10 @@ public class PasteBinPage {
 
     public void clickCreateNewPaste() {
         buttonSubmit.click();
+    }
+
+    public String getValueFromText() {
+        return textareaThatGetted.getAttribute("value");
     }
 
     public void closePage() {

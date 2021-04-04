@@ -1,11 +1,14 @@
 
 package test;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.GoogleCloudCalculatorPage;
 import utility.ChromeDriverSet;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class GoogleCloudTest {
     WebDriver driver = ChromeDriverSet.getDriver();
@@ -64,14 +67,23 @@ public class GoogleCloudTest {
         googleCloudPage.locationDropdown();
         googleCloudPage.committedYearDropdown();
         googleCloudPage.estimateButton();
+        new WebDriverWait(driver, 5);
         googleCloudPage.emailButton();
         ((JavascriptExecutor)driver).executeScript("window.open()");
         ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
         driver.get("https://10minutemail.com");
-        String mailToCopy = driver.findElement(By.xpath("//input[@id='mail_address']")).getText();
+        new WebDriverWait(driver, 5)
+                .until(ExpectedConditions
+                        .presenceOfElementLocated(By.xpath("//input[@id='mail_address']")));
+        WebElement mailToCopy = driver.findElement(By.xpath("//input[@id='mail_address']"));
+        System.out.println(mailToCopy);
+        new WebDriverWait(driver, 5);
+
         driver.switchTo().window(tabs.get(0));
-        googleCloudPage.pasteMail(mailToCopy);
+        driver.switchTo().frame(driver.findElement(By.xpath("//devsite-iframe/iframe[contains(@src,'calculator')]")));
+        driver.switchTo().frame("myFrame");
+        googleCloudPage.pasteMail(mailToCopy.getText());
         googleCloudPage.submitMail();
         googleCloudPage.closePage();
     }

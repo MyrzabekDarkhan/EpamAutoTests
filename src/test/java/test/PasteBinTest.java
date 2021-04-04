@@ -41,7 +41,7 @@ public class PasteBinTest {
 
         Assert.assertEquals(driver.findElement(By.xpath("//h1[normalize-space()='how to gain dominance among developers']")).getText(), "how to gain dominance among developers");
         Assert.assertEquals(driver.findElement(By.xpath("//span[@class='kw2']")).getCssValue("color"), "rgba(185, 202, 74, 1)");
-        //Assert.assertEquals(driver.findElement(By.xpath("//textarea[@id='postform-text']")).getText(),);
+        Assert.assertEquals(page.getValueFromText(),code);
         page.closePage();
     }
 }

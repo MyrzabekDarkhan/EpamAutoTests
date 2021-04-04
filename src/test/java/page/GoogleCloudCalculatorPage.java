@@ -176,7 +176,7 @@ public class GoogleCloudCalculatorPage extends GoogleCloudPage {
     }
 
     public void pasteMail(String mail) {
-        new WebDriverWait(driver, 2)
+        new WebDriverWait(driver, 4)
                 .until(ExpectedConditions.visibilityOf(emailInput));
         emailInput.sendKeys(mail);
     }
